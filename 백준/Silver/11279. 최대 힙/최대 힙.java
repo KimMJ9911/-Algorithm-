@@ -17,8 +17,7 @@ public class Main {
                 if (pQueue.isEmpty()) sb.append(0);
                 else sb.append(pQueue.poll());
                 sb.append("\n");
-            }
-            pQueue.add(k);
+            } else pQueue.add(k);
         }
         bw.write(sb + "");
         bw.flush();
