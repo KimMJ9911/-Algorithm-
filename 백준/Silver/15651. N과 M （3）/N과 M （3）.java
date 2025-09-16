@@ -15,13 +15,15 @@ public class Main {
 
         arr = new int[m];
 
-        DFS(0);
-        bw.write(sb + "");
+        BFS(0);
+
+        bw.write(String.valueOf(sb));
         bw.flush();
-        bw.close();
         br.close();
+        bw.close();
     }
-    static void DFS(int depth) {
+
+    private static void BFS(int depth) {
         if (depth == m) {
             for (int i : arr) {
                 sb.append(i).append(" ");
@@ -32,7 +34,7 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             arr[depth] = i + 1;
-            DFS(depth + 1);
+            BFS(depth + 1);
         }
     }
 }
