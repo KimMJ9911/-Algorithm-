@@ -3,8 +3,8 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int n , m;
+    static int[] arr;
     static boolean[] visited;
-    static int[] table;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -13,25 +13,25 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
+        arr = new int[n];
         visited = new boolean[n];
-        table = new int[m];
 
-        DFS(0);
+        BFS(0);
     }
-    static void DFS(int depth) {
+
+    private static void BFS(int depth) {
         if (depth == m) {
-            for (int i : table) {
-                System.out.print(i + " ");
+            for (int i = 0; i < m; i++) {
+                System.out.print(arr[i] + " ");
             }
             System.out.println();
-            return;
         }
 
         for (int i = 0; i < n; i++) {
-            if (!visited[i]){
+            if (!visited[i]) {
                 visited[i] = true;
-                table[depth] = i + 1;
-                DFS(depth + 1);
+                arr[depth] = i + 1;
+                BFS(depth + 1);
                 visited[i] = false;
             }
         }
