@@ -4,6 +4,7 @@ import java.util.StringTokenizer;
 public class Main {
     static int n , m;
     static int[] arr;
+    static boolean[] visited;
     static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,19 +15,20 @@ public class Main {
         m = Integer.parseInt(st.nextToken());
 
         arr = new int[m];
+        visited = new boolean[n];
 
-        BFS(0);
+        DFS(0);
 
-        bw.write(String.valueOf(sb));
+        bw.write(sb + "");
         bw.flush();
         br.close();
         bw.close();
     }
 
-    private static void BFS(int depth) {
+    private static void DFS(int depth) {
         if (depth == m) {
-            for (int i : arr) {
-                sb.append(i).append(" ");
+            for (int i = 0; i < m; i++) {
+                sb.append(arr[i]).append(" ");
             }
             sb.append("\n");
             return;
@@ -34,7 +36,7 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             arr[depth] = i + 1;
-            BFS(depth + 1);
+            DFS(depth + 1);
         }
     }
 }
