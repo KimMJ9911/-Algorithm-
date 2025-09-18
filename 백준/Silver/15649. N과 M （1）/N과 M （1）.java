@@ -7,31 +7,31 @@ public class Main {
     static boolean[] visited;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine() , " ");
 
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
-        arr = new int[n];
+        arr = new int[m];
         visited = new boolean[n];
 
-        BFS(0);
+        DFS(0);
     }
 
-    private static void BFS(int depth) {
+    private static void DFS(int depth) {
         if (depth == m) {
             for (int i = 0; i < m; i++) {
                 System.out.print(arr[i] + " ");
             }
             System.out.println();
+            return;
         }
 
         for (int i = 0; i < n; i++) {
             if (!visited[i]) {
                 visited[i] = true;
                 arr[depth] = i + 1;
-                BFS(depth + 1);
+                DFS(depth + 1);
                 visited[i] = false;
             }
         }
