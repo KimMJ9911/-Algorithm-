@@ -1,29 +1,28 @@
 import java.io.*;
 
 public class Main {
-    static final int DIV = 15746;
+    static final int div = 15746;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         int n = Integer.parseInt(br.readLine());
 
-        int[] dp = new int[n + 1];
+        int[] arr = new int[n + 1];
+        //11111 , 11100 , 11001 , 10011 , 00111 , 10000 , 00100 , 00001
 
-        if (n == 1) bw.write(1 + "");
-        else if (n == 2) bw.write(2 + "");
+        //dp 가 어려운 경우
+        //1. 점화식을 먼저 접근, 패턴이 있거나 규칙이 발견되면 가정을 세워서 반복하면 됨
+        //2. 점화식이 안보이면 1 부터 가짓수를 구해본다. 가짓수에 규칙이 보이면 더하는 방식으로 반복한다.
+        if (n == 1) System.out.println(1);
+        else if (n == 2) System.out.println(2);
         else {
-            dp[1] = 1;
-            dp[2] = 2;
-
+            arr[1] = 1;
+            arr[2] = 2;
             for (int i = 3; i <= n; i++) {
-                dp[i] = (dp[i - 1] + dp[i - 2]) % DIV;
+                arr[i] = (arr[i - 2] + arr[i - 1]) % div;
             }
-            bw.write(dp[n] + "");
+
+            System.out.println(arr[n]);
         }
 
-        bw.flush();
-        br.close();
-        bw.close();
     }
 }
