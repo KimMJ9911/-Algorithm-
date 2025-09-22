@@ -1,31 +1,27 @@
 import java.io.*;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
         int n = Integer.parseInt(br.readLine());
-
-        int[] dp = new int[n + 1];
-        int MAX = Integer.MIN_VALUE;
+        int[] arr = new int[n + 1];
 
         st = new StringTokenizer(br.readLine() , " ");
-        dp[0] = 0;
+        int MAX = Integer.MIN_VALUE;
         for (int i = 1; i <= n; i++) {
-            int val = Integer.parseInt(st.nextToken());
-            dp[i] = dp[i - 1] + val;
-            MAX = Math.max(dp[i] , MAX);
-            if (dp[i] < 0) dp[i] = 0;
+            arr[i] = Integer.parseInt(st.nextToken()) + arr[i - 1];
+            MAX = Math.max(MAX , arr[i]);
+            //0 아래로 떨어지는 경우 0으로 초기화
+            if (arr[i] < 0) arr[i] = 0;
         }
 
-        bw.write(MAX + "");
+        bw.write(String.valueOf(MAX));
         bw.flush();
-        bw.close();
         br.close();
+        bw.close();
     }
 }
