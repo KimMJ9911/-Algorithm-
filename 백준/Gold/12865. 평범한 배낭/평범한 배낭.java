@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -9,10 +10,11 @@ public class Main {
 
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
+        
+        //무게에 따른 가중치를 담기 위하 최대 무개만큼의 크기로 설정한다.
         int[] dp = new int[k + 1];
-
-        int[] value = new int[n + 1];
         int[] weight = new int[n + 1];
+        int[] value = new int[n + 1];
 
         for (int i = 1; i <= n; i++) {
             st = new StringTokenizer(br.readLine() , " ");
@@ -20,9 +22,7 @@ public class Main {
             value[i] = Integer.parseInt(st.nextToken());
         }
 
-        //물건 하나씩 지정
         for (int i = 1; i <= n; i++) {
-            //최대 무게부터 햔재 무게까지
             for (int j = k; j >= weight[i]; j--) {
                 dp[j] = Math.max(dp[j] , dp[j - weight[i]] + value[i]);
             }
