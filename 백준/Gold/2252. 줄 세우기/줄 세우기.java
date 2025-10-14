@@ -1,61 +1,62 @@
 import java.io.*;
 import java.util.*;
 
-//위상 정렬 알고리즘 다시 정리하기 (유형화)
 public class Main {
+    static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        //위상정렬 알고리즘 구현
+        /**
+         * 위상 정렬 알고리즘 공부하기
+         * 이건 graph 자료 구조형이랑 가중치(inDegree) 에 대한 개념만 알고 있으면 된다.
+         * 뒤에 오는 수는 그만큼의 가중치를 더해야 하므로 한 줄 씩 받아가면서 가중치를 더해주면 된다.
+         * 나중에 줄세울때 가중치 만큼 뒤로 보내주면 되는 거기 때문에 가중치만 신경쓰면서 하자.
+         * 가중치가 먼저 0이 되는 node 를 먼저 출력해준다.
+         */
+
         st = new StringTokenizer(br.readLine() , " ");
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-
         List<List<Integer>> graph = new ArrayList<>();
-        //수가 n + 2개 이므로 그 숫자들을 잇는 선의 갯수는 n + 1이다
         int[] inDegree = new int[n + 1];
-        //그래프 가중치를 생각하면 최초 값의 앞 값과 뒷 값이 존재해야 하므로 총 n + 2게 필요하다
-        for (int i = 0; i <= n + 1; i++) {
+
+        for (int i = 0; i <= n; i++) {
             graph.add(new ArrayList<>());
         }
 
-        //그래프 생성
+        //갯수만큼 줄을 세운 결과를 받으면서 가중치까지 기록
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine() , " ");
-            int val_1 = Integer.parseInt(st.nextToken());
-            int val_2 = Integer.parseInt(st.nextToken());
-            //인접 리스트를 이용해 차수가 없는 그래프를 구현했다. 해당 그래프를 저장하는 방식을 생각하면 수를 이어주어야 한다.
-            graph.get(val_1).add(val_2);
-            //다음에 올 값은 현재 값 = val_1 보다 아래에 존재하는 차수가 하나 더해진 값이 된다.
-            inDegree[val_2]++;
+            int start = Integer.parseInt(st.nextToken());
+            int end = Integer.parseInt(st.nextToken());
+
+            graph.get(start).add(end);
+            inDegree[end]++;
         }
 
         Queue<Integer> queue = new LinkedList<>();
+        for (int i = 1; i <= n; i++) {
+            if (inDegree[i] == 0) queue.offer(i);
+        }
         List<Integer> ans = new ArrayList<>();
 
-        //초기 값인 차수가 0인 시작값을 queue에 먼저 저장
-        for (int i = 1; i < inDegree.length; i++) {
-            if (inDegree[i] == 0) queue.add(i);
-        }
-
         while (!queue.isEmpty()) {
-            int val = queue.poll();
-            //척 번째 값은 차수가 0으로 확정된 값이므로 바로 정답 배열에 저장
-            //다음 값 부터는 차수를 0으로 만든 후 저장
-            ans.add(val);
-            for (int next : graph.get(val)) {
-                inDegree[next]--;
-                if (inDegree[next] == 0) queue.add(next);
+            int next = queue.poll();
+            ans.add(next);
+
+            for (int val : graph.get(next)) {
+                inDegree[val]--;
+                if (inDegree[val] == 0) queue.offer(val);
             }
         }
 
-        for (Integer an : ans) {
-            bw.write(an + " ");
+        for (Integer a : ans) {
+            bw.write(a + " ");
         }
-        br.close();
         bw.flush();
+        br.close();
         bw.close();
     }
 }
